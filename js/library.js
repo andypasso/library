@@ -18,5 +18,13 @@ function addBookToLibrary() {
 }
 
 function render() {
+  const books = document.getElementById('render')
+  books.innerHTML = "";
+
+
+  }
+  
   document.write(myLibrary);
 }
+
+ 
