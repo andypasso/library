@@ -14,32 +14,35 @@ function addBookToLibrary() {
   let numPages = document.getElementById("pages").value;
   let newBook = new Book(title, author, numPages);
 
-  if(title === '' || author === '' || numPages <0){
+  if (title === "" || author === "" || numPages <= 0 || numPages === "") {
     showError();
     return;
   }
+
   myLibrary.push(newBook);
   updateLocalStorage(myLibrary);
   render();
 }
 
+function renderBook(books, i, myLibrary) {
+  let row = books.insertRow(0);
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
+  let cell3 = row.insertCell(2);
+  let cell4 = row.insertCell(3);
+  let cell5 = row.insertCell(4);
+  cell1.innerHTML = myLibrary[i].title;
+  cell2.innerHTML = myLibrary[i].author;
+  cell3.innerHTML = myLibrary[i].numPages;
+  cell4.innerHTML = `<button class='readButton' data-index= ${i}>Unread</button>`;
+  cell5.innerHTML = `<button class='deleteButton' data-index= ${i}>Delete</button>`;
+}
+
 function render() {
   const books = document.getElementById("books");
   books.innerHTML = "";
-
   for (let i = myLibrary.length - 1; i >= 0; i--) {
-    let row = books.insertRow(0);
-    let cell1 = row.insertCell(0);
-    let cell2 = row.insertCell(1);
-    let cell3 = row.insertCell(2);
-    let cell4 = row.insertCell(3);
-    let cell5 = row.insertCell(4);
-
-    cell1.innerHTML = myLibrary[i].title;
-    cell2.innerHTML = myLibrary[i].author;
-    cell3.innerHTML = myLibrary[i].numPages;
-    cell4.innerHTML = `<button class='readButton' data-index= ${i}>Unread</button>`;
-    cell5.innerHTML = `<button class='deleteButton' data-index= ${i}>Delete</button>`;
+    renderBook(books, i, myLibrary);
   }
   let buttons = document.querySelectorAll(".readButton");
   buttons.forEach(buttonElement =>
@@ -50,6 +53,7 @@ function render() {
     deleteElement.addEventListener("click", deleteBook)
   );
 }
+
 render();
 
 let addNewBook = document.getElementById("newBookButton");
