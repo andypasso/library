@@ -42,8 +42,8 @@ Library is a small app for keeping track of books. The book can be marked as rea
 👤 **Andres Rodriguez**
 
 - Github: [@githubhandle](https://github.com/andynarf)
-- Twitter: [@twitterhandle]()
-- Linkedin: [linkedin]()
+- Twitter: [@twitterhandle]( )
+- Linkedin: [linkedin]( )
 
 ## 🤝 Contributing
 
