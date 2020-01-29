@@ -77,7 +77,7 @@ function deleteBook(deletebook) {
   render();
 }
 
-function validateForm() { // estaba vacio ()
+function validateForm() {
   const x = document.forms.formSection.title.value;
   if (x === '') {
     alert('Name must be filled out');
