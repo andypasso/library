@@ -1,4 +1,4 @@
-let myLibrary = JSON.parse(window.localStorage.getItem('libraryStorage'));
+let myLibrary = JSON.parse(window.localStorage.getItem("libraryStorage"));
 if (!myLibrary) myLibrary = [];
 
 function Book(title, author, numPages) {
@@ -13,11 +13,11 @@ function addBookToLibrary() {
   let author = document.getElementById("author").value;
   let numPages = document.getElementById("pages").value;
   let newBook = new Book(title, author, numPages);
+
   myLibrary.push(newBook);
-  updateLocalStorage(myLibrary)
+  updateLocalStorage(myLibrary);
   render();
 }
-
 
 function render() {
   const books = document.getElementById("books");
@@ -33,44 +33,59 @@ function render() {
 
     cell1.innerHTML = myLibrary[i].title;
     cell2.innerHTML = myLibrary[i].author;
-    cell3.innerHTML = myLibrary[i].numPages; 
-    cell4.innerHTML = `<button class='readButton' data-index= ${i}>Unread</button>`
-    cell5.innerHTML = `<button class='deleteButton' data-index= ${i}>Delete</button>`
+    cell3.innerHTML = myLibrary[i].numPages;
+    cell4.innerHTML = `<button class='readButton' data-index= ${i}>Unread</button>`;
+    cell5.innerHTML = `<button class='deleteButton' data-index= ${i}>Delete</button>`;
   }
-
-  let buttons= document.querySelectorAll(".readButton")
-  buttons.forEach(buttonElement => buttonElement.addEventListener("click", updateReadStatus));
-  let deletebuttons= document.querySelectorAll(".deleteButton")
-  deletebuttons.forEach(deleteElement => deleteElement.addEventListener("click", deleteBook));
-
+  let buttons = document.querySelectorAll(".readButton");
+  buttons.forEach(buttonElement =>
+    buttonElement.addEventListener("click", updateReadStatus)
+  );
+  let deletebuttons = document.querySelectorAll(".deleteButton");
+  deletebuttons.forEach(deleteElement =>
+    deleteElement.addEventListener("click", deleteBook)
+  );
 }
+render();
+
+let addNewBook = document.getElementById("newBookButton");
+addNewBook.addEventListener("click", addBookToLibrary);
+
+function updateReadStatus(event) {
+  let button = event.target;
+  let index = button.getAttribute("data-index");
+
+  myLibrary[index].read = !myLibrary[index].read;
+  if (myLibrary[index].read) {
+    button.innerHTML = "Already Read";
+  } else {
+    button.innerHTML = "Unread";
+  }
+  updateLocalStorage(myLibrary);
+}
+
+function deleteBook(deletebook) {
+  let button = deletebook.target;
+  let index = button.getAttribute("data-index");
+  alert("Are you sure you want to delete this book?");
+  myLibrary.splice(index, 1);
+  updateLocalStorage(myLibrary);
   render();
+}
 
-  let addNewBook= document.getElementById("newBookButton") 
-  addNewBook.addEventListener("click", addBookToLibrary);
-
-  function updateReadStatus(event) {
-    let button = event.target 
-    let index = button.getAttribute("data-index");
-
-    myLibrary[index].read= !myLibrary[index].read
-    if (myLibrary[index].read) {
-      button.innerHTML= "Already Read";
-    } else {
-      button.innerHTML= "Unread";
-    }
-    updateLocalStorage(myLibrary);
+function validateForm() {
+  let x = document.forms["formSection"]["title"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
   }
-
-  function deleteBook(deletebook) {
-    let button = deletebook.target 
-    let index = button.getAttribute("data-index");
-    alert("Are you sure you want to delete this book?");
-    myLibrary.splice(index, 1);
-    updateLocalStorage(myLibrary);
-    render();
+  let y = document.forms["formSection"]["author"].value;
+  if (y == "") {
+    alert("author must be filled out");
+    return false;
   }
+}
 
 function updateLocalStorage(array) {
-  window.localStorage.setItem('libraryStorage', JSON.stringify( array ));
-} 
+  window.localStorage.setItem("libraryStorage", JSON.stringify(array));
+}
