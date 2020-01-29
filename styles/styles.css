@@ -54,6 +54,7 @@ table {
 }
 
 td {
+  width: 20%;
   border: none;
   padding: 5px;
 }
