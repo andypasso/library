@@ -12,7 +12,7 @@ Library is a small app for keeping track of books. The book can be marked as rea
 
 ## Live Demo
 
-[Live Demo Link](https://.com)
+[Live Demo Link](https://andynarf.github.io/library/)
 
 ## Getting Started
 
