@@ -14,6 +14,10 @@ function addBookToLibrary() {
   let numPages = document.getElementById("pages").value;
   let newBook = new Book(title, author, numPages);
 
+  if(title === '' || author === '' || numPages <0){
+    showError();
+    return;
+  }
   myLibrary.push(newBook);
   updateLocalStorage(myLibrary);
   render();
