@@ -1,6 +1,10 @@
 let myLibrary = JSON.parse(window.localStorage.getItem('libraryStorage'));
 if (!myLibrary) myLibrary = [];
 
+function updateLocalStorage(array) {
+  window.localStorage.setItem('libraryStorage', JSON.stringify(array));
+}
+
 function Book(title, author, numPages) {
   this.title = title;
   this.author = author;
@@ -21,7 +25,6 @@ function addBookToLibrary() {
 
   myLibrary.push(newBook);
   updateLocalStorage(myLibrary);
-  render();
 }
 
 function renderBook(books, i, myLibrary) {
@@ -36,6 +39,27 @@ function renderBook(books, i, myLibrary) {
   cell3.innerHTML = myLibrary[i].numPages;
   cell4.innerHTML = `<button class='readButton' data-index= ${i}>Unread</button>`;
   cell5.innerHTML = `<button class='deleteButton' data-index= ${i}>Delete</button>`;
+}
+
+function updateReadStatus(event) {
+  const button = event.target;
+  const index = button.getAttribute('data-index');
+
+  myLibrary[index].read = !myLibrary[index].read;
+  if (myLibrary[index].read) {
+    button.innerHTML = 'Already Read';
+  } else {
+    button.innerHTML = 'Unread';
+  }
+  updateLocalStorage(myLibrary);
+}
+
+function deleteBook(deletebook) {
+  const button = deletebook.target;
+  const index = button.getAttribute('data-index');
+  myLibrary.splice(index, 1);
+  updateLocalStorage(myLibrary);
+  render();
 }
 
 function render() {
@@ -54,42 +78,3 @@ render();
 
 const addNewBook = document.getElementById('newBookButton');
 addNewBook.addEventListener('click', addBookToLibrary);
-
-function updateReadStatus(event) {
-  const button = event.target;
-  const index = button.getAttribute('data-index');
-
-  myLibrary[index].read = !myLibrary[index].read;
-  if (myLibrary[index].read) {
-    button.innerHTML = 'Already Read';
-  } else {
-    button.innerHTML = 'Unread';
-  }
-  updateLocalStorage(myLibrary);
-}
-
-function deleteBook(deletebook) {
-  const button = deletebook.target;
-  const index = button.getAttribute('data-index');
-  alert('Are you sure you want to delete this book?');
-  myLibrary.splice(index, 1);
-  updateLocalStorage(myLibrary);
-  render();
-}
-
-function validateForm() {
-  const x = document.forms.formSection.title.value;
-  if (x === '') {
-    alert('Name must be filled out');
-    return false;
-  }
-  const y = document.forms.formSection.author.value;
-  if (y === '') {
-    alert('author must be filled out');
-    return false;
-  }
-}
-
-function updateLocalStorage(array) {
-  window.localStorage.setItem('libraryStorage', JSON.stringify(array));
-}
