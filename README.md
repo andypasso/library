@@ -2,7 +2,7 @@
 
 > A book library using JS Object, DOM manipulation and localStorage.
 
-![screenshot](https://imgur.com/CEA9SMH)
+![screenshot](https://i.imgur.com/CEA9SMH.png)
 
 Library is a small app for keeping track of books. The book can be marked as read or removed from library.
 
